@@ -6,6 +6,8 @@ import fork from "./assets/fork.png";
 import sunset from "./assets/sunset.png";
 import wifi from "./assets/wi-fi-icon.png";
 import star from "./assets/star.png";
+import key from "./assets/key.png";
+import cancel from "./assets/cancel-booking.png";
 
 const MainContainer = styled.div`
   min-height: 100%;
@@ -15,6 +17,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   color: #303331;
+  padding: 24px;
 `;
 
 const MainImage = styled.div`
@@ -23,15 +26,15 @@ const MainImage = styled.div`
   background-image: url(${mountainRoom});
   background-size: cover;
   background-position: bottom;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-radius: 10px;
 `;
 
 const InfoBox1 = styled.div`
   width: 100%;
-  padding: 16px;
+  padding: 16px 0px;
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid #c0c0c0;
 
   h1 {
     font-size: 28px;
@@ -48,9 +51,11 @@ const InfoBox1 = styled.div`
 
 const InfoBox2 = styled.div`
   width: 100%;
-  padding: 16px;
+  padding: 16px 0px 24px 0px;
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid #c0c0c0;
+  overflow: hidden;
 
   h2 {
     font-size: 18px;
@@ -59,7 +64,7 @@ const InfoBox2 = styled.div`
 
   p {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 22px;
   }
 `;
 
@@ -106,7 +111,8 @@ const Amenity = styled.div<AmenityProps>`
 `;
 
 const InfoBox3 = styled.div`
-  padding: 16px;
+  padding: 16px 0px 24px 0px;
+  border-bottom: 1px solid #c0c0c0;
 
   h2 {
     font-size: 18px;
@@ -161,7 +167,7 @@ const Rating = styled.div`
 
   p {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 22px;
   }
 `;
 
@@ -185,7 +191,7 @@ const RatingProfile = styled.div`
 `;
 
 const BtnContainer = styled.div`
-  padding: 16px;
+  padding: 16px 0px;
 `;
 
 const BookBtn = styled.div`
@@ -204,6 +210,56 @@ const BookBtn = styled.div`
   }
 `;
 
+const InfoBox4 = styled.div`
+  padding: 16px 0px 24px 0px;
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+`;
+
+const Policies = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const Policy = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 8px;
+`;
+
+const PolicyInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  h3 {
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+`;
+
+interface PolicyIconProps {
+  image: string;
+}
+
+const PolicyIcon = styled.div<PolicyIconProps>`
+  height: 20px;
+  width: 20px;
+  aspect-ratio: 1/1;
+  background-image: url(${(props) => props.image});
+  background-size: cover;
+  background-positon: center;
+`;
+
 const Rooms = () => {
   // const navigate = useNavigate();
 
@@ -211,7 +267,7 @@ const Rooms = () => {
     <MainContainer>
       <MainImage />
 
-      {/* Pricing and title */}
+      {/* ------------------------------------------------------------------------------- Pricing and title */}
 
       <InfoBox1>
         <div>
@@ -224,7 +280,7 @@ const Rooms = () => {
         </div>
       </InfoBox1>
 
-      {/* Amenities */}
+      {/* ------------------------------------------------------------------------------- Amenities */}
 
       <InfoBox2>
         <h2>Amenities</h2>
@@ -259,7 +315,7 @@ const Rooms = () => {
         </p>
       </InfoBox2>
 
-      {/* Ratings */}
+      {/* ------------------------------------------------------------------------------- Ratings */}
 
       <InfoBox3>
         <h2>Ratings</h2>
@@ -302,6 +358,33 @@ const Rooms = () => {
           </Rating>
         </RatingsContainer>
       </InfoBox3>
+
+      {/* ------------------------------------------------------------------------------- Things to know */}
+
+      <InfoBox4>
+        <h2>Things to know</h2>
+        <Policies>
+          <Policy>
+            <PolicyIcon image={cancel}/>
+            <PolicyInfo>
+              <h3>Cancellation policy</h3>
+              <p>Free cancellation before June 30. Cancel check in on July 5 for a partial refund.</p>
+            </PolicyInfo>
+          </Policy>
+
+          <Policy>
+            <PolicyIcon image={key}/>
+            <PolicyInfo>
+              <h3>House rules</h3>
+              <p>Check-in: 4:00 PM - 6:00PM</p>
+              <p>Checkout before 11:00 AM</p>
+              <p>2 guests maximum</p>
+            </PolicyInfo>
+          </Policy>
+
+        </Policies>
+      </InfoBox4>
+
       <BtnContainer>
         <BookBtn>
           <span>BOOK THIS ROOM</span>
