@@ -26,7 +26,7 @@ Please change the parent <Route path="${Y}"> to <Route path="${Y==="/"?"*":`${Y}
 `,Lg=()=>{const u=Fi();return xt.jsxs(Yg,{children:[xt.jsx("button",{onClick:()=>u("/"),children:"Trip Info"}),xt.jsx("button",{onClick:()=>u("/confirmation"),children:"Confirmation"})]})},Gg=hn.div`
     height: 100%;
     width: 100%;
-    background: yellow;
+    background: lightblue;
     display: flex;
     justify-content: center;
     align-items: center;
