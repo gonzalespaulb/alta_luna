@@ -1,6 +1,11 @@
 // import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import mountainRoom from "./assets/mountainroom.avif";
+import bed from "./assets/double-bed.png";
+import fork from "./assets/fork.png";
+import sunset from "./assets/sunset.png";
+import wifi from "./assets/wi-fi-icon.png";
+import star from "./assets/star.png";
 
 const MainContainer = styled.div`
   min-height: 100%;
@@ -18,6 +23,8 @@ const MainImage = styled.div`
   background-image: url(${mountainRoom});
   background-size: cover;
   background-position: bottom;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 `;
 
 const InfoBox1 = styled.div`
@@ -27,8 +34,9 @@ const InfoBox1 = styled.div`
   justify-content: space-between;
 
   h1 {
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 28px;
+    line-height: 28px;
+    margin-bottom: 8px;
   }
 
   div:nth-child(1) {
@@ -57,12 +65,12 @@ const InfoBox2 = styled.div`
 
 const AmenitiesContainer = styled.div`
   width: 100%;
-  background: white;
   display: flex;
   overflow-x: auto;
   margin-bottom: 16px;
+  gap: 8px;
 
-    /* Firefox */
+  /* Firefox */
   scrollbar-width: none;
 
   /* Safari and Chrome */
@@ -71,11 +79,30 @@ const AmenitiesContainer = styled.div`
   }
 `;
 
-const Amenity = styled.span`
+interface AmenityProps {
+  image: string;
+}
+
+const Amenity = styled.div<AmenityProps>`
   padding: 20px;
   border-radius: 4px;
+  font-size: 14px;
+  line-height: 14px;
   background: #f0f0f0;
+  border: 1px solid #c0c0c0;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  div {
+    height: 20px;
+    width: 20px;
+    aspect-ratio: 1/1;
+    background-image: url(${(props) => props.image});
+    background-size: cover;
+    background-positon: center;
+  }
 `;
 
 const InfoBox3 = styled.div`
@@ -83,6 +110,7 @@ const InfoBox3 = styled.div`
 
   h2 {
     font-size: 18px;
+    margin-bottom: 4px;
   }
 
   span {
@@ -99,7 +127,7 @@ const RatingsContainer = styled.div`
   gap: 8px;
   margin-top: 16px;
 
-    /* Firefox */
+  /* Firefox */
   scrollbar-width: none;
 
   /* Safari and Chrome */
@@ -108,15 +136,51 @@ const RatingsContainer = styled.div`
   }
 `;
 
+const RatingBlurb = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const RatingIcon = styled.div`
+  height: 12px;
+  width: 12px;
+  background-image: url(${star});
+  background-size: cover;
+  background-position: center;
+`;
+
 const Rating = styled.div`
   padding: 20px;
   flex-shrink: 0;
   max-width: 300px;
   background: #f0f0f0;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
 
   p {
     font-size: 14px;
     line-height: 18px;
+  }
+`;
+
+const RatingProfile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: cennter;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #c0c0c0;
+  margin-bottom: 16px;
+
+  h3 {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  span {
+    font-size: 14px;
+    line-height: 14px;
   }
 `;
 
@@ -125,7 +189,7 @@ const BtnContainer = styled.div`
 `;
 
 const BookBtn = styled.div`
-  height: 44px;
+  padding: 25px 12px;
   width: 100%;
   background: #303331;
   border-radius: 4px;
@@ -135,8 +199,8 @@ const BookBtn = styled.div`
 
   span {
     color: white;
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 14px;
+    line-height: 14px;
   }
 `;
 
@@ -152,7 +216,7 @@ const Rooms = () => {
       <InfoBox1>
         <div>
           <h1>Sopris Room</h1>
-          <span>Cardbonale, CO</span>
+          <span>888 Main St, Carbondale, CO 81623</span>
         </div>
         <div>
           <span>$175</span>
@@ -165,16 +229,33 @@ const Rooms = () => {
       <InfoBox2>
         <h2>Amenities</h2>
         <AmenitiesContainer>
-          <Amenity>Queen Size Bed</Amenity>
-          <Amenity>Fast Wifi</Amenity>
-          <Amenity>Nearby Restaurants</Amenity>
-          <Amenity>Scenic Views</Amenity>
+          <Amenity image={bed}>
+            <div></div>
+            <span>Queen Size Bed</span>
+          </Amenity>
+          <Amenity image={wifi}>
+            {" "}
+            <div></div>
+            <span>Fast Wifi</span>
+          </Amenity>
+          <Amenity image={fork}>
+            {" "}
+            <div></div>
+            <span>Nearby Restaurants</span>
+          </Amenity>
+          <Amenity image={sunset}>
+            {" "}
+            <div></div>
+            <span>Scenic Views</span>
+          </Amenity>
         </AmenitiesContainer>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis
-          minima blanditiis explicabo alias veniam aliquam sit, possimus
-          mollitia ipsum! Ad atque at iste similique eligendi amet aut iusto
-          magni impedit!
+          Wake up to sweeping views of Mount Sopris from this light-filled hotel
+          room, where the iconic twin peaks feel close enough to touch.
+          Thoughtfully designed for comfort and calm, the space blends modern
+          touches with the laid-back charm of Carbondale. Whether you’re sipping
+          coffee at sunrise or winding down at dusk, the mountain backdrop
+          steals the show.
         </p>
       </InfoBox2>
 
@@ -182,32 +263,41 @@ const Rooms = () => {
 
       <InfoBox3>
         <h2>Ratings</h2>
-        <span>4.9 Ratings (250 Reviews)</span>
+        <RatingBlurb>
+          <RatingIcon />
+          <span>4.9 Ratings (250 Reviews)</span>
+        </RatingBlurb>
         <RatingsContainer>
           <Rating>
+            <RatingProfile>
+              <h3>Paul</h3>
+              <span>5/5</span>
+            </RatingProfile>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi
-              facilis veniam itaque voluptates iusto, perferendis, reiciendis
-              nemo tempore, fugiat adipisci facere voluptate amet repellat? Eos
-              molestias vero consectetur eligendi ipsam.
+              Great service and clean facility. Very close to many restaurants
+              and nightlife.
             </p>
           </Rating>
 
           <Rating>
+            <RatingProfile>
+              <h3>Lindsay</h3>
+              <span>4.5/5</span>
+            </RatingProfile>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi
-              facilis veniam itaque voluptates iusto, perferendis, reiciendis
-              nemo tempore, fugiat adipisci facere voluptate amet repellat? Eos
-              molestias vero consectetur eligendi ipsam.
+              Awesome stay. The staff were very friendly and the room that we
+              stayed in had a wonderful view of Mt. Sopris.
             </p>
           </Rating>
 
           <Rating>
+            <RatingProfile>
+              <h3>Chris</h3>
+              <span>4.5/5</span>
+            </RatingProfile>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi
-              facilis veniam itaque voluptates iusto, perferendis, reiciendis
-              nemo tempore, fugiat adipisci facere voluptate amet repellat? Eos
-              molestias vero consectetur eligendi ipsam.
+              A real bang for your buck when it comes to hotels in the Roaring
+              Fork Valley.
             </p>
           </Rating>
         </RatingsContainer>
