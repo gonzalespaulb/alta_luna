@@ -15,6 +15,7 @@ const Rooms = () => {
     const navigate = useNavigate();
 
     return <MainContainer>
+      <h1>Rooms Page</h1>
       <button onClick={() => navigate("/")}>Trip Info</button>
       <button onClick={() => navigate("/confirmation")}>Confirmation</button>
     </MainContainer>
