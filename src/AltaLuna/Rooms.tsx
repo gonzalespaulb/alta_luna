@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import mountainRoom from "./assets/mountainroom.avif";
 
 const MainContainer = styled.div`
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background: #edebe3;
   display: flex;
@@ -141,7 +141,7 @@ const BookBtn = styled.div`
 `;
 
 const Rooms = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <MainContainer>
