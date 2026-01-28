@@ -17,7 +17,7 @@ Please change the parent <Route path="${Y}"> to <Route path="${Y==="/"?"*":`${Y}
   justify-content: center;
   align-items: center;
 `,Lg=()=>{const u=Jr();return tt.jsxs(Yg,{children:[tt.jsx("button",{onClick:()=>u("/rooms"),children:"Rooms"}),tt.jsx("button",{onClick:()=>u("/confirmation"),children:"Confirmation"})]})},Gg="/alta_luna/assets/mountainroom-dKtTP0GL.avif",Xg=le.div`
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background: #edebe3;
   display: flex;
