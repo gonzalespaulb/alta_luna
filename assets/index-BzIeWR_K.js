@@ -23,7 +23,7 @@ Please change the parent <Route path="${Y}"> to <Route path="${Y==="/"?"*":`${Y}
     display: flex;
     justify-content: center;
     align-items: center;
-`,Lg=()=>{const u=Fi();return xt.jsxs(Yg,{children:[xt.jsx("button",{onClick:()=>u("/"),children:"Trip Info"}),xt.jsx("button",{onClick:()=>u("/confirmation"),children:"Confirmation"})]})},Gg=hn.div`
+`,Lg=()=>{const u=Fi();return xt.jsxs(Yg,{children:[xt.jsx("h1",{children:"Rooms Page"}),xt.jsx("button",{onClick:()=>u("/"),children:"Trip Info"}),xt.jsx("button",{onClick:()=>u("/confirmation"),children:"Confirmation"})]})},Gg=hn.div`
     height: 100%;
     width: 100%;
     background: lightblue;
