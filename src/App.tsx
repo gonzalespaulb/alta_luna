@@ -1,13 +1,13 @@
 import './App.css'
 import AltaLuna from './AltaLuna/AltaLuna'
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 function App() {
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AltaLuna/>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
