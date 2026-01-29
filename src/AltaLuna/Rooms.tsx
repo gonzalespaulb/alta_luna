@@ -8,6 +8,18 @@ import wifi from "./assets/wi-fi-icon.png";
 import star from "./assets/star.png";
 import key from "./assets/key.png";
 import cancel from "./assets/cancel-booking.png";
+import right from "./assets/chevron.png";
+import left from "./assets/left-chevron.png";
+import { getCalendarMonth } from "./Calendar";
+import {
+  format,
+  isSameDay,
+  isAfter,
+  isBefore,
+  addMonths,
+  subMonths,
+} from "date-fns";
+import { useState } from "react";
 
 const MainContainer = styled.div`
   min-height: 100%;
@@ -260,8 +272,175 @@ const PolicyIcon = styled.div<PolicyIconProps>`
   background-positon: center;
 `;
 
+const InfoBox5 = styled.div`
+  padding: 16px 0px 24px 0px;
+  border-bottom: 1px solid #c0c0c0;
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+`;
+
+const WeekDayRow = styled.div`
+  width: 100%;
+  display: grid;
+  height: 40px;
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid #c0c0c0;
+
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:not(:last-child) {
+      border-right: 1px solid #c0c0c0;
+    }
+  }
+`;
+
+const DaysGrid = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid #c0c0c0;
+  border-top: none;
+`;
+
+const Calendar = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f0f0f0;
+`;
+
+const Days = styled.div`
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: #c0c0c0;
+  }
+
+  span {
+    font-size: 14px;
+    line-height: 14px;
+  }
+`;
+
+const MonthUI = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: minmax(min-content, max-content) 1fr minmax(
+      min-content,
+      max-content
+    );
+  border: 1px solid #c0c0c0;
+  border-bottom: none;
+
+  span {
+    font-size: 14px;
+    line-height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+interface MonthToggleButtonProps {
+  icon: string;
+}
+
+const MonthToggleButton = styled.div<MonthToggleButtonProps>`
+  height: 40px;
+  width: 40px;
+  background-image: url(${(props) => props.icon});
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
 const Rooms = () => {
   // const navigate = useNavigate();
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+
+  const days = getCalendarMonth(currentMonth);
+  const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
+
+  const handleDayClick = (day: Date) => {
+    // No dates selected yet
+    if (!startDate) {
+      setStartDate(day);
+      setEndDate(null);
+      return;
+    }
+
+    // Start date selected, no end date yet
+    if (startDate && !endDate) {
+      if (isAfter(day, startDate)) {
+        setEndDate(day);
+      } else {
+        // Clicked before start → reset start
+        setStartDate(day);
+      }
+      return;
+    }
+
+    // Both selected → reset and start new range
+    setStartDate(day);
+    setEndDate(null);
+  };
+
+  const isInRange = (day: Date) => {
+    if (!startDate || !endDate) return false;
+    return isAfter(day, startDate) && isBefore(day, endDate);
+  };
+
+  const isRangeStart = (day: Date) => startDate && isSameDay(day, startDate);
+
+  const isRangeEnd = (day: Date) => endDate && isSameDay(day, endDate);
+
+  const renderCalendarDays = days.map((day) => {
+    const isStart = isRangeStart(day);
+    const isEnd = isRangeEnd(day);
+    const inRange = isInRange(day);
+
+    return (
+      <Days
+        key={day.toISOString()}
+        onClick={() => handleDayClick(day)}
+        style={{
+          background:
+            isStart || isEnd ? "#303331" : inRange ? "#c0c0c0" : "transparent",
+          color: isStart || isEnd ? "#fff" : "#303331",
+          cursor: "pointer",
+        }}
+      >
+        <span>{format(day, "d")}</span>
+      </Days>
+    );
+  });
+
+  const renderWeekDays = weekDays.map((day) => {
+    return <div>{day}</div>;
+  });
+
+  const handleNextMonth = () => {
+    setCurrentMonth((prev) => addMonths(prev, 1));
+  };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth((prev) => subMonths(prev, 1));
+  };
 
   return (
     <MainContainer>
@@ -365,15 +544,18 @@ const Rooms = () => {
         <h2>Things to know</h2>
         <Policies>
           <Policy>
-            <PolicyIcon image={cancel}/>
+            <PolicyIcon image={cancel} />
             <PolicyInfo>
               <h3>Cancellation policy</h3>
-              <p>Free cancellation before June 30. Cancel check in on July 5 for a partial refund.</p>
+              <p>
+                Free cancellation before June 30. Cancel check in on July 5 for
+                a partial refund.
+              </p>
             </PolicyInfo>
           </Policy>
 
           <Policy>
-            <PolicyIcon image={key}/>
+            <PolicyIcon image={key} />
             <PolicyInfo>
               <h3>House rules</h3>
               <p>Check-in: 4:00 PM - 6:00PM</p>
@@ -381,9 +563,23 @@ const Rooms = () => {
               <p>2 guests maximum</p>
             </PolicyInfo>
           </Policy>
-
         </Policies>
       </InfoBox4>
+
+      {/* ------------------------------------------------------------------------------- Calendar */}
+      <InfoBox5>
+        <h2>Select Dates</h2>
+        <Calendar>
+          <MonthUI>
+            <MonthToggleButton icon={left} onClick={handlePrevMonth}></MonthToggleButton>
+            <span>{format(currentMonth, "MMMM")}</span>
+            <MonthToggleButton icon={right} onClick={handleNextMonth}></MonthToggleButton>
+          </MonthUI>
+
+          <WeekDayRow>{renderWeekDays}</WeekDayRow>
+          <DaysGrid>{renderCalendarDays}</DaysGrid>
+        </Calendar>
+      </InfoBox5>
 
       <BtnContainer>
         <BookBtn>
